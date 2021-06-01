@@ -11,15 +11,10 @@ import "./app.css";
 
 import { Navigation } from "./Navigation";
 import { CoreExample } from "./CoreExample";
-import { SelectExample } from "./SelectExample";
-import { DatetimeExample } from "./DatetimeExample";
-
 const App = () => (
   <div>
     <Navigation />
     <CoreExample />
-    <SelectExample />
-    <DatetimeExample />
   </div>
 );
 

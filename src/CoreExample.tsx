@@ -4,28 +4,69 @@ import {
   ButtonGroup,
   Intent,
   Slider,
-  KeyCombo
+  KeyCombo,
+  FormGroup, H5, InputGroup, Switch, Text, TextArea, MenuItem
 } from "@blueprintjs/core";
+
+import { Select } from "@blueprintjs/select";
 
 import { Example } from "./Example";
 
+import { filterFilm, renderFilm, IFilm, TOP_100_FILMS } from "./films";
+
+const FilmSelect = Select.ofType<IFilm>();
+
+
+
 export const CoreExample: React.FC = () => {
-  const [sliderValue, setSliderValue] = useState<number>(8);
+
+  const [film, setFilm] = useState<IFilm>(TOP_100_FILMS[0]);
+
+
+  
+
   return (
-    <Example header="Core Sandbox">
-      <ButtonGroup>
-        <Button intent={Intent.PRIMARY} text="Primary" />
-        <Button intent={Intent.WARNING} text="Warning" />
-        <Button intent={Intent.SUCCESS} text="Success" />
-        <Button intent={Intent.DANGER} text="Danger" />
-      </ButtonGroup>
-      <br />
-      <br />
+    <Example header="Add Device Form">
+    <FormGroup
+                    inline={true}
+                    label={"Device Name"}
+                    labelFor="text-input"
+                    labelInfo={"(required)"}
+                >
+                    <InputGroup id="text-input" placeholder="Name" disabled={false} />
+                </FormGroup>
+         <br />
+    <FormGroup
+                    inline={false}
+                    label={"Description"}
+                    labelFor="text-area"
+                    labelInfo={"(required)"}
+                >
+                    <TextArea id="text-area" fill={true} />
+                </FormGroup>
+         <br />
 
-      <KeyCombo combo="mod" />
-      <br />
+    <FormGroup
+                    inline={false}
+                    label={"OEM"}
+                    labelInfo={"(required)"}
+                >
+                    <FilmSelect
+                        items={TOP_100_FILMS}
+                        itemPredicate={filterFilm}
+                        itemRenderer={renderFilm}
+                        noResults={<MenuItem disabled={true} text="No results." />}
+                        onItemSelect={setFilm}
+                      >
+                        <Button text={film.title} rightIcon="caret-down" />
+                      </FilmSelect>
+                </FormGroup>
+         <br />
 
-      <Slider min={0} max={11} onChange={setSliderValue} value={sliderValue} />
+
+             <br />         
+        <Button intent={Intent.PRIMARY} text="Submit" />
+     
     </Example>
   );
 };
